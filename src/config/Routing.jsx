@@ -4,6 +4,7 @@ import { Home } from '../pages/Home'
 import { LoginPage } from '../pages/LoginPage'
 import { Register } from '../pages/Register'
 import { Products } from '../pages/Products'
+import { ProductDetail } from '../pages/ProductDetail'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,7 +15,7 @@ const router = createBrowserRouter(
             <Route>
                 <Route path="" element={<Home/>}/>
                 <Route path="Products" element={<Products/>}/>
-
+                <Route path="Products/:id" element={<ProductDetail/>}/>
             </Route>
         </Route>
     )

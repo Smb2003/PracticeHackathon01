@@ -1,25 +1,21 @@
-import { CircularProgress } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
-import { useNavigate, useParams } from "react-router-dom";
+import { CircularProgress, Rating, Stack } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
-export const Products = () => {
-  const [productData, setProductData] = useState([]);
-  const navigate = useNavigate();
-  const checkAPI = async () => {
-    const products = await fetch("https://dummyjson.com/products");
-    const Data = await products.json();
-    setProductData([...productData, ...Data.products]);
-  };
-  console.log(productData);
-  useEffect(() => {
-    checkAPI();
-  }, []);
-
-  const Show = () => {
-      navigate(`Products/${id}`)
-  }
+export const ProductDetail = () => {
+    const {id} = useParams();
+    console.log(id);
+    const [SingleProductData, setSingleProductData] = useState([]);
+    const checkAPI = async () => {
+        const Singleproduct = await fetch(`https://dummyjson.com/products/${id}`);
+        const Data = await Singleproduct.json();
+        console.log(Data);
+        setSingleProductData([...SingleProductData,Data]);
+    };
+    console.log(SingleProductData);
+    useEffect(() => {
+        checkAPI();
+    }, []);
   return (
     <div className="w-full h-screen">
       <div className="relative w-full h-32 md:h-1/3 bg-orange-600 ">
@@ -31,8 +27,8 @@ export const Products = () => {
       </div>
 
       <div className="w-full h-screen p-3 flex flex-wrap">
-        {productData.length > 0 ? (
-          productData.map((item, index) => {
+        {SingleProductData.length > 0 ? (
+         SingleProductData.map((item, index) => {
             const {
               thumbnail,
               brand,
@@ -74,9 +70,7 @@ export const Products = () => {
                   </Stack>
                   <h3 className="text-lg md:text-xl font-medium">${price}</h3>
                   <div className="flex flex-wrap md:flex-row flex-col w-full justify-between items-center my-2">
-                    <button onClick={Show} className=" w-1/2 h-10 px-1 rounded-md border border-1 border-red-500 hover:bg-orange-400 hover:font-medium">
-                      Show Details
-                    </button>
+                   
                     <button className=" w-1/2 h-10 px-2  rounded-md border border-1 border-red-500 hover:bg-orange-400 hover:font-medium">
                       Add to Cart
                     </button>
@@ -94,3 +88,4 @@ export const Products = () => {
     </div>
   );
 };
+
